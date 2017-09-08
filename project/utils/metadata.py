@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, ForeignKey, Text
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, ForeignKey, Text, Date
 
 engine = create_engine('sqlite:///:memory:', echo=True)
 
@@ -24,6 +24,7 @@ contact = Table(
     Column("contactID", Integer, primary_key=True),
     Column('userID', Integer, ForeignKey("user.userID"), nullable=False),
     Column("type", String),
+    Column("contact_type", String),
     Column("contact", String)
 )
 
@@ -41,13 +42,6 @@ address_user = Table(
     "ADDRESS_USER", metadata,
     Column('addressID', Integer, ForeignKey("ADDRESS.addressID"), nullable=False),
     Column('userID', Integer, ForeignKey("USER.userID"), nullable=False)
-)
-
-manager = Table(
-    'MANAGER', metadata,
-    Column('managerID', Integer, primary_key=True),
-    Column('userID', Integer, ForeignKey("user.userID"), nullable=False),
-    Column('post', String, nullable=False)
 )
 
 professional = Table(
@@ -77,6 +71,43 @@ responsible_student = Table(
     Column('responsableID', Integer, ForeignKey("RESPONSIBLE.responsibleID"), nullable=False),
     Column('studentID', Integer, ForeignKey("STUDENT.studentID"), nullable=False)
 )
+
+school = Table(
+    "school", metadata,
+    Column("schoolID", Integer, primary_key=True),
+    Column("name", String),
+    Column("Owner", String),
+    Column('address', Integer, ForeignKey("ADDRESS.addressID"), nullable=False)
+)
+
+school_anotations = Table(
+    "SCHOOL_ANOTATIONS", metadata,
+    Column("anotationsID", Integer, primary_key=True),
+    Column("date", Date),
+    Column("anotation", Text)
+)
+
+professional_school = Table(
+    "PROFESSIONAL_SCHOOL", metadata,
+    Column('professionalID', Integer, ForeignKey("PROFESSIONAL.professionalID"), nullable=False),
+    Column('schoolID', Integer, ForeignKey("SCHOOL.schoolID"), nullable=False)
+)
+
+school_class = Table(
+    "CLASS", metadata,
+    Column("classID", Integer, primary_key=True),
+    Column('schoolID', Integer, ForeignKey("SCHOOL.schoolID"), nullable=False),
+    Column("rotation", String),
+    Column("name")
+)
+
+class_professional = Table(
+    "CLASS_PROFESSIONAL", metadata,
+    Column('professionalID', Integer, ForeignKey("PROFESSIONAL.professionalID"), nullable=False),
+    Column('classID', Integer, ForeignKey("CLASS.classID"), nullable=False)
+)
+
+
 
 metadata.create_all(engine)
 
