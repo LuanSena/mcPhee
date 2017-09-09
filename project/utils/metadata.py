@@ -35,7 +35,7 @@ address = Table(
     Column("city", String),
     Column("state", String),
     Column("name", String),
-    Column("adjunct", String)
+    Column("adjunct", String) #useful information / reference point
 )
 
 address_user = Table(
@@ -52,7 +52,7 @@ professional = Table(
     Column("rotation", String)
 )
 
-responsible = Table(
+responsible = Table( #student responsable
     "RESPONSIBLE", metadata,
     Column("responsableID", Integer, primary_key=True),
     Column('userID', Integer, ForeignKey("user.userID"), nullable=False),
@@ -76,7 +76,7 @@ school = Table(
     "school", metadata,
     Column("schoolID", Integer, primary_key=True),
     Column("name", String),
-    Column("Owner", String),
+    Column("Owner", String), #head director
     Column('address', Integer, ForeignKey("ADDRESS.addressID"), nullable=False)
 )
 
@@ -84,7 +84,7 @@ school_anotations = Table(
     "SCHOOL_ANOTATIONS", metadata,
     Column("anotationsID", Integer, primary_key=True),
     Column("date", Date),
-    Column("anotation", Text)
+    Column("anotation", Text) #observations
 )
 
 professional_school = Table(
@@ -97,7 +97,7 @@ school_class = Table(
     "CLASS", metadata,
     Column("classID", Integer, primary_key=True),
     Column('schoolID', Integer, ForeignKey("SCHOOL.schoolID"), nullable=False),
-    Column("rotation", String),
+    Column("rotation", String), #shift
     Column("name")
 )
 
