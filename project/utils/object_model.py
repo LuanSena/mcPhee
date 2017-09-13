@@ -1,3 +1,5 @@
+import random
+
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import sessionmaker
 
@@ -7,23 +9,23 @@ Base = automap_base(metadata=metadata)
 Base.prepare()
 
 UserModel = Base.classes.USER
-
-class TestModel():
-    def __init__(self):
-        self.model = Base.classes.USER
-
-    def set_model(self, username, addressNumber):
-        user = self.model(username=username, addressNumber=addressNumber)
-        return user
+ProfessionalModel = Base.classes.PROFESSIONAL
 
 if __name__ == "__main__":
-    # new_user = UserModel(username="luan", addressNumber="195")
-    new_user = TestModel()
-    new_user = new_user.set_model(username="fulano", addressNumber="555")
     session_maker = sessionmaker(bind=ENGINE)
     session = session_maker()
+
+    new_user = UserModel(username="luan", addressNumber="195", document=random.randint(0, 999999999))
     session.add(new_user)
+    session.flush()
+
+    new_professional = ProfessionalModel(userID=new_user.userID, occupation="admin", rotation="Moring")
+    session.add(new_professional)
     session.commit()
 
-    for row in session.query(UserModel): #.filter(UserModel.username == "luan"):
-        print(row.userID, row.username)
+    for row in session.query(ProfessionalModel, UserModel).filter(ProfessionalModel.userID == UserModel.userID):
+        print(row.PROFESSIONAL.userID,
+              row.USER.username,
+              row.PROFESSIONAL.professionalID,
+              row.PROFESSIONAL.occupation,
+              row.USER.document)

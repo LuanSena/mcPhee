@@ -11,6 +11,7 @@ user = Table(
     'USER', metadata,
     Column('userID', Integer, primary_key=True, autoincrement=True),
     Column('username', String(16), nullable=False),
+    Column('document', String, nullable=False),
     Column("addressNumber", String)
 )
 
@@ -51,7 +52,7 @@ professional = Table(
     'PROFESSIONAL', metadata,
     Column("professionalID", Integer, primary_key=True),
     Column('userID', Integer, ForeignKey("USER.userID"), nullable=False),
-    Column("post", String, nullable=False),
+    Column("occupation", String, nullable=False),
     Column("rotation", String)
 )
 
