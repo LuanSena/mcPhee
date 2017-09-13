@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, ForeignKey, Text, Date
 
 # def migrate_db():
-ENGINE = create_engine('sqlite:///test.db', echo=True)
+ENGINE = create_engine('sqlite:///test.db', echo=False)
 # engine = create_engine('sqlite:////home/luan/Downloads/SQLiteStudio/dbs/mcphee', echo=True)
 
 
@@ -80,7 +80,7 @@ school = Table(
     Column("schoolID", Integer, primary_key=True),
     Column("name", String),
     Column("Owner", String),  # head director
-    Column('address', Integer, ForeignKey("ADDRESS.addressID"), nullable=False)
+    Column('addressID', Integer, ForeignKey("ADDRESS.addressID"), nullable=False)
 )
 
 school_anotations = Table(
