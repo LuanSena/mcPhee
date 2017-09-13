@@ -1,8 +1,8 @@
 from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, ForeignKey, Text, Date
 
 # def migrate_db():
-ENGINE = create_engine('sqlite:///test.db', echo=False)
-# engine = create_engine('sqlite:////home/luan/Downloads/SQLiteStudio/dbs/mcphee', echo=True)
+# ENGINE = create_engine('sqlite:///test.db', echo=False)
+ENGINE = create_engine('sqlite:////home/luan/Downloads/SQLiteStudio/dbs/mcphee', echo=True)
 
 
 metadata = MetaData()
