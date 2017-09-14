@@ -8,7 +8,7 @@ class ProfessionalBP:
         blueprint = Blueprint('professional')
 
         blueprint.add_route(Professional.as_view(session_maker), '/professional')
-        # blueprint.add_route(ProfessionalInstance.as_view(session_maker), '/professional/<professional_id>')
+        blueprint.add_route(Professional.as_view(session_maker), '/professional/<prof_id>')
 
         self.blueprint = blueprint
 
