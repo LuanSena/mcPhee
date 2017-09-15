@@ -20,7 +20,6 @@ class Professional(HTTPMethodView):
                                              address_number=request["addressNumber"],
                                              document=request["document"],
                                              occupation=request["occupation"],
-                                             rotation=request["rotation"],
                                              cep=request["cep"]
                                              )
             professional.add_new(session)
@@ -51,7 +50,7 @@ class Professional(HTTPMethodView):
                              "addressNumber": entry.address_number[0],
                              "document": entry.document[0],
                              "occupation": entry.occupation[0],
-                             "rotation": entry.rotation,
+                             # "rotation": entry.rotation,
                              # "cep": entry.cep,
                              "userId": entry.user_id[0],
                              "professionalId": entry.professional_id[0]})

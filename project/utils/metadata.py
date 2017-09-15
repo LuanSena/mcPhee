@@ -52,8 +52,7 @@ professional = Table(
     'PROFESSIONAL', metadata,
     Column("professionalID", Integer, primary_key=True),
     Column('userID', Integer, ForeignKey("USER.userID"), nullable=False),
-    Column("occupation", String, nullable=False),
-    Column("rotation", String)
+    Column("occupation", String, nullable=False)
 )
 
 responsible = Table(  # student responsable
@@ -101,7 +100,6 @@ school_class = Table(
     "CLASS", metadata,
     Column("classID", Integer, primary_key=True),
     Column('schoolID', Integer, ForeignKey("SCHOOL.schoolID"), nullable=False),
-    Column("rotation", String),  # shift
     Column("name", String)
 )
 

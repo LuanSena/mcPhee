@@ -19,7 +19,7 @@ if __name__ == "__main__":
     session.add(new_user)
     session.flush()
 
-    new_professional = ProfessionalModel(userID=new_user.userID, occupation="admin", rotation="Moring")
+    new_professional = ProfessionalModel(userID=new_user.userID, occupation="admin")
     session.add(new_professional)
     session.commit()
 

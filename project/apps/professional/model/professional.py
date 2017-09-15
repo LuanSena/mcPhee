@@ -12,7 +12,7 @@ class ProfessionalModel():
                  address_number=None,
                  document=None,
                  occupation=None,
-                 rotation=None,
+                 # rotation=None,
                  cep=None,
                  user_id=None,
                  professional_id=None):
@@ -22,7 +22,7 @@ class ProfessionalModel():
         self.address_number = address_number
         self.document = document
         self.occupation = occupation
-        self.rotation = rotation
+        # self.rotation = rotation
         self.cep = cep
 
     def add_new(self, session):
@@ -37,8 +37,9 @@ class ProfessionalModel():
         self.user_id = new_user.userID
 
         new_professional = ProfessionalModel(userID=new_user.userID,
-                                             occupation=self.occupation,
-                                             rotation=self.rotation)
+                                             occupation=self.occupation
+                                             # rotation=self.rotation
+                                             )
         session.add(new_professional)
         session.flush()
         self.professional_id = new_professional.professionalID
@@ -57,7 +58,7 @@ class ProfessionalModel():
         self.address_number = result.USER.addressNumber
         self.document = result.USER.document
         self.occupation = result.PROFESSIONAL.occupation
-        self.rotation = result.PROFESSIONAL.rotation
+        # self.rotation = result.PROFESSIONAL.rotation
 
     @staticmethod
     def get_paginated(session, page, page_size):
@@ -75,7 +76,7 @@ class ProfessionalModel():
             new_professional.address_number=result.USER.addressNumber,
             new_professional.document=result.USER.document,
             new_professional.occupation=result.PROFESSIONAL.occupation,
-            new_professional.rotation=result.PROFESSIONAL.rotation
+            # new_professional.rotation=result.PROFESSIONAL.rotation
 
             result_list.append(new_professional)
         return result_list
