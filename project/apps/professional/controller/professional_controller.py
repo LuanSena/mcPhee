@@ -1,5 +1,6 @@
 from sanic.response import json
 from sanic.views import HTTPMethodView
+from sqlalchemy.orm.exc import NoResultFound
 
 from apps.common.controller.request_manager import RequestManager
 from apps.professional.model.professional import ProfessionalModel
@@ -28,7 +29,7 @@ class Professional(HTTPMethodView):
             response = {"success": True,
                         "professional": "/professional/" + str(professional.professional_id)}
 
-            return json(response, 200)
+            return json(response, 202)
         except Exception as e:
             print(str(e))
             return json({"success": False,
@@ -40,9 +41,21 @@ class Professional(HTTPMethodView):
         session = self.session_maker()
         self.page = RequestManager.get_page_from_request(request)
         result = ProfessionalModel.get_paginated(session=session, page=self.page, page_size=self.page_size)
-        for entry in result:
-            print(entry)
-        return json("done", 200)
+        response = self._build_professional_response(result)
+        return json(response, 200)
+
+    def _build_professional_response(self, objects):
+        response = list()
+        for entry in objects:
+            response.append({"name": entry.name[0],
+                             "addressNumber": entry.address_number[0],
+                             "document": entry.document[0],
+                             "occupation": entry.occupation[0],
+                             "rotation": entry.rotation,
+                             # "cep": entry.cep,
+                             "userId": entry.user_id[0],
+                             "professionalId": entry.professional_id[0]})
+        return response
 
 class ProfessionalInstance(HTTPMethodView):
     def __init__(self, session_maker):
@@ -57,6 +70,12 @@ class ProfessionalInstance(HTTPMethodView):
 
             session.close()
             return json(professional, 200)
+
+        except NoResultFound as e:
+            print(str(e))
+            return json({"success": False,
+                         "message": "No result were found"}, 404)
+
         except Exception as e:
             print(str(e))
             return json({"success": False,
