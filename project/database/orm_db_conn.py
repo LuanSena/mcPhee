@@ -12,6 +12,6 @@ def get_session():
     sql_alchemy_conn = os.getenv(DB_CONN_STR, False)
     if sql_alchemy_conn is False:
         sql_alchemy_conn = sqlite_conn
-    engine = create_engine(sql_alchemy_conn, echo=True)
+    engine = create_engine(sql_alchemy_conn, echo=False)
     session_maker = sessionmaker(bind=engine)
     return session_maker
