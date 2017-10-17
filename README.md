@@ -47,8 +47,22 @@ Contratos dos endpoints
   "addressComplement" : "String",
   "email": "String",
   "contact", "String"
-  "schools" : [ { "school_name": "String", "school_attribute" : int} ]
-  "students": [ { "name": "str", "age": int, "obs": "string", "class": "str", "schoolID": int, "schoolName": str} ]
+  "schools" : [
+  		{ 
+  		  "school_name": "String",
+		  "school_attribute" : int
+		} 
+	      ]
+  "students": [ 
+  		{
+		  "name": "str",
+		  "age": int,
+		  "obs": "string",
+		  "class": "str",
+		  "schoolID": int,
+		  "schoolName": str
+		}
+	      ]
 }
 ```
 
