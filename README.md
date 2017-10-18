@@ -14,13 +14,13 @@ Contratos dos endpoints
   "name": "String",
   "age": int,
   "document": "String",
-  "atribute" : int, [options: 1 - user, 2 - teacher, 3 - manager, 4 - admin]
+  "attributeId" : int, [options: 1 - user, 2 - teacher, 3 - manager, 4 - admin]
   "addressName": "String",
-  "addresNumber" "String",
+  "addressNumber" "String",
   "addressComplement" : "String",
   "email": "String",
   "password", "String",
-  "Contact", "String"	
+  "contact", "String"	
 }
 ```
 
