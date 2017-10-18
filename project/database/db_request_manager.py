@@ -23,9 +23,9 @@ def get_person_by_id(db_conn, person_id):
     person['name'] = entry[1]
     person["age"] = entry[2]
     person["document"] = entry[3]
-    person["atribute"] = entry[4]
+    person["attribute"] = entry[4]
     person["addressName"] = entry[5]
-    person["addresNumber"] = entry[6]
+    person["addressNumber"] = entry[6]
     person["addressComplement"] = entry[7]
     person["email"] = entry[8]
     person["contact"] = entry[9]
@@ -97,9 +97,18 @@ def get_person_by_login(db_conn, user, password):
     if entry:
         return get_person_by_id(db_conn, entry[0])
     else:
-        return "False"
+        return False
 
 
-conn = sqlite3.connect("/home/luan/workspace/mcPhee/new_mcphee.sqlite")
-# print(get_person_by_id(conn, 4))
-print(get_person_by_login(conn, "66666", "ADMIN"))
+# conn = sqlite3.connect("/home/luan/workspace/mcPhee/new_mcphee.sqlite")
+# # print(get_person_by_id(conn, 4))
+# print(get_person_by_login(conn, "66666", "ADMIN"))
+def get_persons(db_conn):
+    persons = list()
+    cursor = db_conn.cursor()
+    cursor.execute("select person_id from person")
+    for row in cursor:
+        person = get_person_by_id(db_conn, row[0])
+        persons.append(person)
+
+    return persons
