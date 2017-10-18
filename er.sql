@@ -9,7 +9,7 @@ CREATE TABLE message_board (
 
 
 CREATE TABLE person (
- person_id INT NOT NULL PRIMARY KEY,
+ person_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
  name VARCHAR(50),
  age INT,
  document VARCHAR(10) NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE person (
 
 
 CREATE TABLE school (
- schoolID INT NOT NULL PRIMARY KEY,
+ schoolID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
  name VARCHAR(50),
  document VARCHAR(10)
 );

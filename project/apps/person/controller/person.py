@@ -12,19 +12,8 @@ class Person(HTTPMethodView):
     async def post(self, request):
         try:
             request = request.json
-            name = request["name"],
-            age = request["age"],
-            document = request["document"],
-            atribute = request["attribute"],
-            address_name = request["addressName"],
-            addres_number = request["addressNumber"],
-            address_complement = request["addressComplement"],
-            email = request["email"],
-            password = request["password"],
-            contact = request["Contact"]
 
-            person_id = db_request_manager.insert_person(self.db_conn(), name, age, document, atribute, address_name,
-                                                         addres_number, address_complement, email, password, contact)
+            person_id = db_request_manager.insert_person(self.db_conn, request)
             response = {"success": True,
                         "person": "v1/person/" + str(person_id)}
 

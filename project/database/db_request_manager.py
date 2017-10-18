@@ -1,8 +1,23 @@
-import sqlite3
-
-
-def insert_person(*args):
-    pass
+def insert_person(db_conn, args):
+    cursor = db_conn.cursor()
+    query = '''
+    INSERT INTO
+        person(name, age, document, attribute_id, address_name, address_number, address_complement, email, contact)
+    VALUES('{name}', {age}, '{document}', {attribute_id}, '{address_name}', '{address_number}', '{address_complement}', '{email}', '{contact}');
+    '''.format(name=args["name"],
+               age=args["age"],
+               document=args["document"],
+               attribute_id=args["attributeId"],
+               address_name=args["addressName"],
+               address_number=args["addressNumber"],
+               address_complement=args["addressComplement"],
+               email=args["email"],
+               contact=args["contact"])
+    print(query)
+    cursor.execute(query)
+    db_conn.commit()
+    person = get_person_by_login(db_conn, args["email"], args["password"])
+    return person['id']
 
 
 def get_person_by_id(db_conn, person_id):
