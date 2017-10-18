@@ -15,9 +15,9 @@ class Person(HTTPMethodView):
             name = request["name"],
             age = request["age"],
             document = request["document"],
-            atribute = request["atribute"],
+            atribute = request["attribute"],
             address_name = request["addressName"],
-            addres_number = request["addresNumber"],
+            addres_number = request["addressNumber"],
             address_complement = request["addressComplement"],
             email = request["email"],
             password = request["password"],
@@ -35,25 +35,8 @@ class Person(HTTPMethodView):
                          "message": "unexpected error has occurred"}, 500)
 
     async def get(self, request):
-        # session = self.db_conn()
-        # self.page = RequestManager.get_page_from_request(request)
-        # result = ProfessionalModel.get_paginated(session=session, page=self.page, page_size=self.page_size)
-        # response = self._build_professional_response(result)
-        # return json(response, 200)
-        pass
-
-    def _build_professional_response(self, objects):
-        response = list()
-        for entry in objects:
-            response.append({"name": entry.name[0],
-                             "addressNumber": entry.address_number[0],
-                             "document": entry.document[0],
-                             "occupation": entry.occupation[0],
-                             # "rotation": entry.rotation,
-                             # "cep": entry.cep,
-                             "userId": entry.user_id[0],
-                             "professionalId": entry.professional_id[0]})
-        return response
+        persons = db_request_manager.get_persons(self.db_conn)
+        return json(persons, 200)
 
 
 class PersonInstance(HTTPMethodView):
