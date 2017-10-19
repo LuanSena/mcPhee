@@ -1,4 +1,4 @@
-from sanic.response import json
+from sanic.response import json, text
 from sanic.views import HTTPMethodView
 
 from project.database import db_request_manager
@@ -8,7 +8,10 @@ class PersonLogin(HTTPMethodView):
     def __init__(self, db_conn):
         self.db_conn = db_conn
 
-    async def get(self, request):
+    async def options(self, request):
+        return text("ok")
+
+    async def post(self, request):
         try:
             user = request.headers['user']
             password = request.headers['password']

@@ -10,7 +10,7 @@ class PersonBP:
 
         blueprint.add_route(Person.as_view(db_conn), '/v1/person')
         blueprint.add_route(PersonInstance.as_view(db_conn), '/v1/person/<prof_id>')
-        blueprint.add_route(PersonLogin.as_view(db_conn), '/v1/login')
+        blueprint.add_route(PersonLogin.as_view(db_conn), '/v1/auth')
 
         self.blueprint = blueprint
 
