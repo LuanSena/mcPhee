@@ -1,17 +1,11 @@
 from sanic import Sanic
 
-from apps.professional.urls import ProfessionalBP
-from database import orm_db_conn
+from apps.person.urls import PersonBP
 
 
-def get_app():
+def get_app(session):
     app = Sanic()
-    session = orm_db_conn.get_session()
 
-    # invoice = InvoiceBP(session)
-    # customer = InvoiceCustomerBP(session)
-    professional = ProfessionalBP(session)
-    # app.blueprint(customer.blueprint)
-    # app.blueprint(invoice.blueprint)
-    app.blueprint(professional.blueprint)
+    person = PersonBP(session)
+    app.blueprint(person.blueprint)
     return app
