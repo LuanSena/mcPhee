@@ -96,4 +96,16 @@ CREATE TABLE student_class (
  FOREIGN KEY (class_id) REFERENCES class (class_id)
 );
 
+CREATE TABLE message (
+ message_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+ receptor_id int,
+ sender_id INT,
+ send_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+ checked INT,
+ checked_date DATETIME,
+ message BLOB,
+
+ FOREIGN KEY (receptor_id) REFERENCES person (person_id),
+ FOREIGN KEY (sender_id) REFERENCES person (person_id)
+);
 
