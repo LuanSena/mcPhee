@@ -92,6 +92,7 @@ def get_person_by_id(db_conn, person_id):
         student["school_name"] = row[4]
         student["school_id"] = row[5]
         student["class_id"] = row[6]
+        student["diarys"] = get_student_diary_by_id(db_conn, student["student_id"])
         students.append(student)
     person["students"] = students
 
@@ -143,9 +144,27 @@ def get_person_by_login(db_conn, user, password):
         return False
 
 
-# conn = sqlite3.connect("/home/luan/workspace/mcPhee/new_mcphee.sqlite")
-# # print(get_person_by_id(conn, 4))
-# print(get_person_by_login(conn, "66666", "ADMIN"))
+def get_student_diary_by_id(db_conn, student_id, size=5):
+    cursor = db_conn.cursor()
+    cursor.execute('''
+        SELECT 
+            diary_id, student_id, diary_date, diary_text 
+        FROM 
+            diary
+        WHERE
+            student_id = {student_id}
+        LIMIT {size};'''.format(student_id=student_id, size=size))
+    diarys = list()
+    for row in cursor:
+        diary = dict()
+        diary["diaryId"] = row[0]
+        diary["studentId"] = row[1]
+        diary["diaryDate"] = row[2]
+        diary["diaryText"] = row[3]
+        diarys.append(diary)
+    return diarys
+
+
 def get_persons(db_conn):
     persons = list()
     cursor = db_conn.cursor()
