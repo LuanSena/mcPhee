@@ -45,6 +45,7 @@ def get_person_by_id(db_conn, person_id):
     person["email"] = entry[8]
     person["contact"] = entry[9]
 
+    # GET SCHOOLS
     cursor.execute('''
         select
             person.person_id,
@@ -68,6 +69,7 @@ def get_person_by_id(db_conn, person_id):
         schools.append(school)
     person["schools"] = schools
 
+    # GET STUDENTS
     cursor.execute('''
     select
         student.student_id, student.name, student.age, student.obs, school.name as school_name,
@@ -80,7 +82,6 @@ def get_person_by_id(db_conn, person_id):
         student_class.student_id = student_owners.student_id and
         class.class_id = student_class.class_id and
         school.schoolID = class.schoolID '''.format(person_document=person['document']))
-
     students = list()
     for row in cursor:
         student = dict()
@@ -93,7 +94,34 @@ def get_person_by_id(db_conn, person_id):
         student["class_id"] = row[6]
         students.append(student)
     person["students"] = students
+
+    # GET UNREAD TOP 5 MESSAGES
+    person["messages"] = get_person_unread_messages(db_conn, person_id, 5)
     return person
+
+
+def get_person_unread_messages(db_conn, person_id, size=5):
+    cursor = db_conn.cursor()
+    cursor.execute('''
+    select
+        message_id, receptor_id, sender_id, person.name as sender_name, send_date, checked, checked_date, message 
+    from
+        message, person
+    where
+        sender_id=person.person_id AND
+        receptor_id={person_id}
+    LIMIT {size};'''.format(person_id=person_id, size=size))
+    messages = list()
+    for row in cursor:
+        message = dict()
+        message["messageId"] = row[0]
+        message["senderName"] = row[3]
+        message["sendDate"] = row[4]
+        message["checked"] = row[5]
+        message["checkedDate"] = row[6]
+        message["message"] = row[7]
+        messages.append(message)
+    return messages
 
 
 def get_person_by_login(db_conn, user, password):
