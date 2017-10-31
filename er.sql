@@ -62,7 +62,7 @@ CREATE TABLE diary (
  diary_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
  student_id INT NOT NULL,
  diary_date DATETIME DEFAULT CURRENT_TIMESTAMP,
- text BLOB,
+ diary_text BLOB,
 
  FOREIGN KEY (student_id) REFERENCES student (student_id)
 );
