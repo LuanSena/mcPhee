@@ -59,15 +59,10 @@ CREATE TABLE class (
 
 
 CREATE TABLE diary (
- diary_id INT NOT NULL,
- student_id CHAR(10) NOT NULL,
- date CHAR(10),
- text CHAR(10),
- status CHAR(10),
- feeding CHAR(10),
- other CHAR(10),
-
- PRIMARY KEY (diary_id,student_id),
+ diary_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+ student_id INT NOT NULL,
+ diary_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+ text BLOB,
 
  FOREIGN KEY (student_id) REFERENCES student (student_id)
 );
