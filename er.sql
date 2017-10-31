@@ -98,6 +98,7 @@ CREATE TABLE message (
  send_date DATETIME DEFAULT CURRENT_TIMESTAMP,
  checked INT,
  checked_date DATETIME,
+ message_title CHAR(50),
  message BLOB,
 
  FOREIGN KEY (receptor_id) REFERENCES person (person_id),

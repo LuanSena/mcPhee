@@ -105,7 +105,7 @@ def get_person_unread_messages(db_conn, person_id, size=5):
     cursor = db_conn.cursor()
     cursor.execute('''
     select
-        message_id, receptor_id, sender_id, person.name as sender_name, send_date, checked, checked_date, message 
+        message_id, receptor_id, sender_id, person.name as sender_name, send_date, checked, checked_date, message, message_title 
     from
         message, person
     where
@@ -121,6 +121,7 @@ def get_person_unread_messages(db_conn, person_id, size=5):
         message["checked"] = row[5]
         message["checkedDate"] = row[6]
         message["message"] = row[7]
+        message["messageTitle"] = row[8]
         messages.append(message)
     return messages
 
