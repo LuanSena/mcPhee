@@ -199,17 +199,17 @@ def get_school_by_id(db_conn, school_id):
         where school_id = {school_id};'''.format(school_id=school_id))
     school = dict()
     for row in cursor:
-        school["school_id"] = row[0]
-        school["full_name"] = row[1]
-        school["fantasy_name"] = row[2]
-        school["created_at"] = row[3]
+        school["schoolId"] = row[0]
+        school["fullName"] = row[1]
+        school["fantasyName"] = row[2]
+        school["createdAt"] = row[3]
         school["street"] = row[4]
         school["email"] = row[5]
         school["contact"] = row[6]
         school["document"] = row[7]
-        school["owner_name"] = row[8]
-        school["owner_attribute"] = row[9]
-        school["owner_contact"] = row[10]
+        school["ownerName"] = row[8]
+        school["ownerAttribute"] = row[9]
+        school["ownerContact"] = row[10]
     return school
 
 
