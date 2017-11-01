@@ -149,11 +149,12 @@ def get_student_diary_by_id(db_conn, student_id, size=5):
     cursor = db_conn.cursor()
     cursor.execute('''
         SELECT 
-            diary_id, student_id, diary_date, diary_text 
+            diary_id, diary.student_id, diary_date, diary_text, stu.name as student_name
         FROM 
-            diary
+            diary, student as stu
         WHERE
-            student_id = {student_id}
+            diary.student_id = {student_id} AND
+        stu.student_id = diary.student_id
         LIMIT {size};'''.format(student_id=student_id, size=size))
     diarys = list()
     for row in cursor:
@@ -162,6 +163,7 @@ def get_student_diary_by_id(db_conn, student_id, size=5):
         diary["studentId"] = row[1]
         diary["diaryDate"] = row[2]
         diary["diaryText"] = row[3]
+        diary["studentName"] = row[4]
         diarys.append(diary)
     return diarys
 
