@@ -50,7 +50,7 @@ def get_person_by_id(db_conn, person_id):
         select
             person.person_id,
             person.name as person_name,
-            school.name as school_name,
+            school.fantasy_name as school_name,
             school.document as school_document,
             school.school_id,
             person_school.attribute_id as school_acess_level
@@ -72,7 +72,7 @@ def get_person_by_id(db_conn, person_id):
     # GET STUDENTS
     cursor.execute('''
     select
-        student.student_id, student.name, student.age, student.obs, school.name as school_name,
+        student.student_id, student.name, student.age, student.obs, school.fantasy_name as school_name,
         school.school_id as school_id, student_class.class_id
     from
         student, school, student_class, class, student_owners
@@ -81,7 +81,7 @@ def get_person_by_id(db_conn, person_id):
         student.student_id = student_owners.student_id and
         student_class.student_id = student_owners.student_id and
         class.class_id = student_class.class_id and
-        school.school_id = class.school_id '''.format(person_document=person['document']))
+        school.school_id = class.schoolid '''.format(person_document=person['document']))
     students = list()
     for row in cursor:
         student = dict()
