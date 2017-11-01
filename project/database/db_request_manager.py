@@ -52,14 +52,14 @@ def get_person_by_id(db_conn, person_id):
             person.name as person_name,
             school.name as school_name,
             school.document as school_document,
-            school.schoolID,
+            school.school_id,
             person_school.attribute_id as school_acess_level
         from
             school, person_school, person
         where
             person.person_id = {person_id} and
             person_school.person_id = person.person_id and
-            person_school.school_id = school.schoolID'''.format(person_id=person_id))
+            person_school.school_id = school.school_id'''.format(person_id=person_id))
     schools = list()
     for row in cursor:
         school = dict()
@@ -73,7 +73,7 @@ def get_person_by_id(db_conn, person_id):
     cursor.execute('''
     select
         student.student_id, student.name, student.age, student.obs, school.name as school_name,
-        school.schoolID as school_id, student_class.class_id
+        school.school_id as school_id, student_class.class_id
     from
         student, school, student_class, class, student_owners
     where
@@ -81,7 +81,7 @@ def get_person_by_id(db_conn, person_id):
         student.student_id = student_owners.student_id and
         student_class.student_id = student_owners.student_id and
         class.class_id = student_class.class_id and
-        school.schoolID = class.schoolID '''.format(person_document=person['document']))
+        school.school_id = class.school_id '''.format(person_document=person['document']))
     students = list()
     for row in cursor:
         student = dict()
@@ -177,3 +177,48 @@ def get_persons(db_conn):
         persons.append(person)
 
     return persons
+
+
+def get_school_by_id(db_conn, school_id):
+    cursor = db_conn.cursor()
+    cursor.execute('''
+        select 
+            school_id,
+            full_name,
+            fantasy_name,
+            created_at,
+            street,
+            email,
+            contact,
+            document,
+            owner_name,
+            owner_attribute,
+            owner_contact
+        from
+            school
+        where school_id = {school_id};'''.format(school_id=school_id))
+    school = dict()
+    for row in cursor:
+        school["school_id"] = row[0]
+        school["full_name"] = row[1]
+        school["fantasy_name"] = row[2]
+        school["created_at"] = row[3]
+        school["street"] = row[4]
+        school["email"] = row[5]
+        school["contact"] = row[6]
+        school["document"] = row[7]
+        school["owner_name"] = row[8]
+        school["owner_attribute"] = row[9]
+        school["owner_contact"] = row[10]
+    return school
+
+
+def get_schools(db_conn):
+    schools = list()
+    cursor = db_conn.cursor()
+    cursor.execute("select school_id from school")
+    for row in cursor:
+        school = get_school_by_id(db_conn, row[0])
+        schools.append(school)
+
+    return schools

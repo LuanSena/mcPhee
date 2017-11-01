@@ -1,5 +1,5 @@
 CREATE TABLE attributes (
- attribute_id CHAR(10) NOT NULL PRIMARY KEY,
+ attribute_id CHAR(10) NOT NULL PRIMARY KEY AUTOINCREMENT,
  name CHAR(10)
 );
 
@@ -26,14 +26,34 @@ CREATE TABLE person (
 
 
 CREATE TABLE school (
- schoolID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
- name VARCHAR(50),
- document VARCHAR(10)
+ school_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+ full_name VARCHAR(60),
+ fantasy_name VARCHAR(30),
+ created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+ street VARCHAR(100),
+ email VARCHAR(60),
+ contact VARCHAR(30),
+ document VARCHAR(20),
+ owner_name VARCHAR(60),
+ owner_attribute VARCHAR(60),
+ owner_contact VARCHAR(60),
+
+);
+
+CREATE TABLE school_turns (
+ school_turns_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+ school_id INTEGER NOT NULL,
+ name VARCHAR(60),
+ start_time VARCHAR(30),
+ created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+ end_time VARCHAR(100),
+ obs VARCHAR(60),
+ FOREIGN KEY (school_id) REFERENCES school (school_id)
 );
 
 
 CREATE TABLE student (
- student_id CHAR(10) NOT NULL PRIMARY KEY,
+ student_id CHAR(10) NOT NULL PRIMARY KEY AUTOINCREMENT,
  name CHAR(10),
  age CHAR(10),
  obs CHAR(10)
@@ -51,10 +71,10 @@ CREATE TABLE student_owners (
 
 
 CREATE TABLE class (
- class_id CHAR(10) NOT NULL PRIMARY KEY,
- schoolID INT NOT NULL,
+ class_id CHAR(10) NOT NULL PRIMARY KEY AUTOINCREMENT,
+ school_id INT NOT NULL,
 
- FOREIGN KEY (schoolID) REFERENCES school (schoolID)
+ FOREIGN KEY (school_id) REFERENCES school (school_id)
 );
 
 
@@ -75,7 +95,7 @@ CREATE TABLE person_school (
 
  PRIMARY KEY (school_id,person_id,attribute_id),
 
- FOREIGN KEY (school_id) REFERENCES school (schoolID),
+ FOREIGN KEY (school_id) REFERENCES school (school_id),
  FOREIGN KEY (person_id) REFERENCES person (person_id),
  FOREIGN KEY (attribute_id) REFERENCES attributes (attribute_id)
 );
