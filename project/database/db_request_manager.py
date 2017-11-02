@@ -212,6 +212,7 @@ def get_school_by_id(db_conn, school_id):
         school["ownerContact"] = row[10]
     return school
 
+
 def get_school_turns_by_id(db_conn, school_id):
     cursor = db_conn.cursor()
     cursor.execute('''
@@ -235,6 +236,7 @@ def get_school_turns_by_id(db_conn, school_id):
         school_turn["obs"] = row[4]
         school_turns.append(school_turn)
     return school_turns
+
 
 def get_schools(db_conn):
     schools = list()
