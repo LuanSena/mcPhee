@@ -85,6 +85,10 @@ CREATE TABLE class (
 CREATE TABLE diary (
  diary_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
  student_id INT NOT NULL,
+ title VARCHAR(50),
+ text BLOB,
+ some_issue blooean,
+ origin INT,
  diary_date DATETIME DEFAULT CURRENT_TIMESTAMP,
  diary_text BLOB,
 
