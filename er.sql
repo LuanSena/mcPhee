@@ -53,10 +53,14 @@ CREATE TABLE school_turns (
 
 
 CREATE TABLE student (
- student_id CHAR(10) NOT NULL PRIMARY KEY AUTOINCREMENT,
- name CHAR(10),
- age CHAR(10),
- obs CHAR(10)
+ student_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+ name VARCHAR(50),
+ grade varchar(25),
+ born_date DATETIME,
+ nacionality varchar(25),
+ eating_obs varchar(250),
+ obs varchar(250),
+ created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 
