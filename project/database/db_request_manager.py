@@ -72,7 +72,7 @@ def get_person_by_id(db_conn, person_id):
     # GET STUDENTS
     cursor.execute('''
     select
-        student.student_id, student.name, student.age, student.obs, school.fantasy_name as school_name,
+        student.student_id, student.name, cast(strftime('%Y.%m%d', 'now') - strftime('%Y.%m%d', born_date) as int) as age, student.obs, school.fantasy_name as school_name,
         school.school_id as school_id, student_class.class_id
     from
         student, school, student_class, class, student_owners
@@ -149,7 +149,7 @@ def get_student_diary_by_id(db_conn, student_id, size=5):
     cursor = db_conn.cursor()
     cursor.execute('''
         SELECT 
-            diary_id, diary.student_id, diary_date, diary_text, stu.name as student_name
+            diary_id, diary.student_id, diary_date, text, stu.name as student_name
         FROM 
             diary, student as stu
         WHERE

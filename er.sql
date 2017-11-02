@@ -56,7 +56,7 @@ CREATE TABLE student (
  student_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
  name VARCHAR(50),
  grade varchar(25),
- born_date DATETIME,
+ born_date DATE,
  nacionality varchar(25),
  eating_obs varchar(250),
  obs varchar(250),
@@ -90,7 +90,6 @@ CREATE TABLE diary (
  some_issue blooean,
  origin INT,
  diary_date DATETIME DEFAULT CURRENT_TIMESTAMP,
- diary_text BLOB,
 
  FOREIGN KEY (student_id) REFERENCES student (student_id)
 );
