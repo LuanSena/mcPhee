@@ -212,6 +212,29 @@ def get_school_by_id(db_conn, school_id):
         school["ownerContact"] = row[10]
     return school
 
+def get_school_turns_by_id(db_conn, school_id):
+    cursor = db_conn.cursor()
+    cursor.execute('''
+        select 
+            school_turns_id,
+            name,
+            start_time,
+            end_time,
+            obs
+        from
+            school_turns
+        where school_id = {school_id};'''.format(school_id=school_id))
+    school_turns = list()
+
+    for row in cursor:
+        school_turn = dict()
+        school_turn["schoolTurnsId"] = row[0]
+        school_turn["name"] = row[1]
+        school_turn["startTime"] = row[2]
+        school_turn["endTime"] = row[3]
+        school_turn["obs"] = row[4]
+        school_turns.append(school_turn)
+    return school_turns
 
 def get_schools(db_conn):
     schools = list()

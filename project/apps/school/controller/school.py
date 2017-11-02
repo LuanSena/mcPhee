@@ -35,6 +35,7 @@ class SchoolInstance(HTTPMethodView):
     async def get(self, request, school_id):
         try:
             school = db_request_manager.get_school_by_id(self.db_conn, school_id)
+            school["turns"] = db_request_manager.get_school_turns_by_id(self.db_conn, school_id)
             return json(school, 200)
 
         except NoResultFound as e:
