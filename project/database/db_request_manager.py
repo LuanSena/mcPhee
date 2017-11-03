@@ -149,7 +149,7 @@ def get_student_diary_by_id(db_conn, student_id, size=5):
     cursor = db_conn.cursor()
     cursor.execute('''
         SELECT 
-            diary_id, diary.student_id, diary_date, text, stu.name as student_name
+            diary_id, diary.student_id, diary_date, text, stu.name as student_name, title, some_issue
         FROM 
             diary, student as stu
         WHERE
@@ -164,6 +164,8 @@ def get_student_diary_by_id(db_conn, student_id, size=5):
         diary["diaryDate"] = row[2]
         diary["diaryText"] = row[3]
         diary["studentName"] = row[4]
+        diary["title"] = row[5]
+        diary["someIssue"] = row[6]
         diarys.append(diary)
     return diarys
 
@@ -247,3 +249,32 @@ def get_schools(db_conn):
         schools.append(school)
 
     return schools
+
+
+def get_student_by_id(db_conn, student_id):
+    student = dict()
+    cursor = db_conn.cursor()
+    cursor.execute("""
+        select
+            student.student_id,
+            student.name,
+            cast(strftime('%Y.%m%d', 'now') - strftime('%Y.%m%d', born_date) as INT) as age,
+            student.grade,
+            student.nacionality,
+            student.eating_obs,
+            student.obs,
+            student.created_at
+        from
+            student
+        where student_id={student_id}
+    """.format(student_id=student_id))
+    for row in cursor:
+        student["studentId"] = row[0]
+        student["name"] = row[1]
+        student["age"] = row[2]
+        student["grade"] = row[3]
+        student["nacionality"] = row[4]
+        student["eatingObs"] = row[5]
+        student["obs"] = row[6]
+        student["createdAt"] = row[7]
+    return student
