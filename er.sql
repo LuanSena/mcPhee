@@ -75,10 +75,21 @@ CREATE TABLE student_owners (
 
 
 CREATE TABLE class (
- class_id CHAR(10) NOT NULL PRIMARY KEY AUTOINCREMENT,
+ class_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
  school_id INT NOT NULL,
+ name VARCHAR(25),
 
  FOREIGN KEY (school_id) REFERENCES school (school_id)
+);
+
+CREATE TABLE person_class (
+ class_id INTEGER NOT NULL,
+ person_id INTEGER NOT NULL,
+ desc varchar(25),
+
+ FOREIGN KEY (person_id) REFERENCES person (person_id),
+ FOREIGN KEY (class_id) REFERENCES class (class_id),
+ PRIMARY KEY (class_id, person_id)
 );
 
 

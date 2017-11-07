@@ -46,5 +46,5 @@ where
     student.student_id = student_owners.student_id and
     student_class.student_id = student_owners.student_id and
     class.class_id = student_class.class_id and
-    school.schoolID = class.schoolID;
+    school.schoolID = class.school_id;
     

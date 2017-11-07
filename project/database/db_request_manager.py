@@ -81,7 +81,7 @@ def get_person_by_id(db_conn, person_id):
         student.student_id = student_owners.student_id and
         student_class.student_id = student_owners.student_id and
         class.class_id = student_class.class_id and
-        school.school_id = class.schoolid '''.format(person_document=person['document']))
+        school.school_id = class.school_id '''.format(person_document=person['document']))
     students = list()
     for row in cursor:
         student = dict()
@@ -278,3 +278,33 @@ def get_student_by_id(db_conn, student_id):
         student["obs"] = row[6]
         student["createdAt"] = row[7]
     return student
+
+
+def get_person_classes_by_id(db_conn, person_id):
+    cursor = db_conn.cursor()
+    cursor.execute('''
+            SELECT 
+                person_class.class_id,
+                person_class.desc,
+                class.name,
+                school.school_id,
+                school.fantasy_name
+            FROM 
+                person_class, class, school
+            where 
+                person_class.person_id = {person_id} AND
+                class.class_id = person_class.class_id AND
+                school.school_id = class.school_id
+            
+            ;'''.format(person_id=person_id))
+    person_classes = list()
+
+    for row in cursor:
+        person_class = dict()
+        person_class["classId"] = row[0]
+        person_class["description"] = row[1]
+        person_class["className"] = row[2]
+        person_class["schoolId"] = row[3]
+        person_class["schoolFantasyName"] = row[4]
+        person_classes.append(person_class)
+    return person_classes
