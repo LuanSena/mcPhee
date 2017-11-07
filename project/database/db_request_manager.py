@@ -1,3 +1,6 @@
+import time
+
+
 def insert_person(db_conn, args):
     cursor = db_conn.cursor()
     query = '''
@@ -308,3 +311,30 @@ def get_person_classes_by_id(db_conn, person_id):
         person_class["schoolFantasyName"] = row[4]
         person_classes.append(person_class)
     return person_classes
+
+
+def get_student_by_class_id(db_conn, class_id):
+    cursor = db_conn.cursor()
+    cursor.execute('''
+            SELECT
+                student_id, class_id
+            FROM
+                student_class
+            WHERE class_id={class_id};'''.format(class_id=class_id))
+    students = list()
+    for row in cursor:
+        student = dict()
+        student["student_id"] = row[0]
+        students.append(student)
+    return students
+
+
+def insert_diary(db_conn, student, diary_text):
+    cursor = db_conn.cursor()
+    cursor.execute('''
+            INSERT INTO diary
+                (student_id, title, "text", diary_date)
+            VALUES({student_id}, 'Diario postado', {diary_text}, {date_time});
+'''.format(student_id=student, diary_text=diary_text, date_time=time.strftime("%Y-%m-%d %H:%M:%S")))
+    db_conn.commit()
+    return True
