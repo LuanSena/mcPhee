@@ -20,6 +20,7 @@ CREATE TABLE person (
  email VARCHAR(100),
  password VARCHAR(200),
  contact VARCHAR(100),
+ full_name VARCHAR(50),
 
  FOREIGN KEY (attribute_id) REFERENCES attributes (attribute_id)
 );

@@ -28,7 +28,8 @@ def get_person_by_id(db_conn, person_id):
     cursor.execute('''
     select
          per.person_id, per.name, per.age, per.document, per.attribute_id as acess_level, per.address_name,
-         per.address_number, per.address_complement, per.email, per.contact
+         per.address_number, per.address_complement, per.email, per.contact,
+         per.full_name
     from 
          person as per
     where 
@@ -47,6 +48,7 @@ def get_person_by_id(db_conn, person_id):
     person["addressComplement"] = entry[7]
     person["email"] = entry[8]
     person["contact"] = entry[9]
+    person["fullName"] = entry[10]
 
     # GET SCHOOLS
     cursor.execute('''
