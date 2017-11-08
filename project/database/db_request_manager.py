@@ -331,10 +331,13 @@ def get_student_by_class_id(db_conn, class_id):
 
 def insert_diary(db_conn, student, diary_text):
     cursor = db_conn.cursor()
-    cursor.execute('''
+    query = '''
             INSERT INTO diary
                 (student_id, title, "text", diary_date)
-            VALUES({student_id}, 'Diario postado', {diary_text}, {date_time});
-'''.format(student_id=student, diary_text=diary_text, date_time=time.strftime("%Y-%m-%d %H:%M:%S")))
+            VALUES({student_id}, 'Diario postado', '{diary_text}', '{date_time}');
+'''.format(student_id=student, diary_text=diary_text, date_time=time.strftime("%Y-%m-%d %H:%M:%S"))
+    print(query)
+    cursor.execute(query)
+
     db_conn.commit()
     return True

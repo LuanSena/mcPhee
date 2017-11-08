@@ -14,7 +14,7 @@ class DiaryPerClass(HTTPMethodView):
             students = db_request_manager.get_student_by_class_id(self.db_conn, class_id)
 
             for student in students:
-                db_request_manager.insert_diary(self.db_conn, student, request["diaryText"])
+                db_request_manager.insert_diary(self.db_conn, student["student_id"], request["diaryText"])
 
             response = {"success": True}
 
