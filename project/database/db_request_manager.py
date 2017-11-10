@@ -332,13 +332,14 @@ def get_student_by_class_id(db_conn, class_id):
     return students
 
 
-def insert_diary(db_conn, student, diary_text):
+def insert_diary(db_conn, student, diary_text, diary_title="Diário postado"):
     cursor = db_conn.cursor()
     query = '''
             INSERT INTO diary
                 (student_id, title, "text", diary_date)
-            VALUES({student_id}, 'Diario postado', '{diary_text}', '{date_time}');
-'''.format(student_id=student, diary_text=diary_text, date_time=time.strftime("%Y-%m-%d %H:%M:%S"))
+            VALUES({student_id}, '{diary_title}', '{diary_text}', '{date_time}');
+'''.format(student_id=student, diary_text=diary_text, date_time=time.strftime("%Y-%m-%d %H:%M:%S"),
+           diary_title=diary_title)
     print(query)
     cursor.execute(query)
 
