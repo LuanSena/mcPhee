@@ -1,4 +1,4 @@
-from sanic.response import json
+from sanic.response import json, text
 from sanic.views import HTTPMethodView
 
 from project.database import db_request_manager
@@ -7,6 +7,9 @@ from project.database import db_request_manager
 class DiaryPerClass(HTTPMethodView):
     def __init__(self, db_conn):
         self.db_conn = db_conn
+
+    async def options(self, request, class_id):
+        return text("ok")
 
     async def post(self, request, class_id):
         try:
@@ -28,6 +31,9 @@ class DiaryPerClass(HTTPMethodView):
 class DiaryPerStudent(HTTPMethodView):
     def __init__(self, db_conn):
         self.db_conn = db_conn
+
+    async def options(self, request, class_id):
+        return text("ok")
 
     async def post(self, request, student_id):
         try:
