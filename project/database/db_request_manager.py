@@ -160,6 +160,7 @@ def get_student_diary_by_id(db_conn, student_id, size=5):
         WHERE
             diary.student_id = {student_id} AND
         stu.student_id = diary.student_id
+        ORDER BY diary_date DESC
         LIMIT {size};'''.format(student_id=student_id, size=size))
     diarys = list()
     for row in cursor:
