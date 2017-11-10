@@ -32,13 +32,13 @@ class DiaryPerStudent(HTTPMethodView):
     def __init__(self, db_conn):
         self.db_conn = db_conn
 
-    async def options(self, request, class_id):
+    async def options(self, request, student_id):
         return text("ok")
 
     async def post(self, request, student_id):
         try:
             request = request.json
-            db_request_manager.insert_diary(self.db_conn, student_id, request["diaryText"])
+            db_request_manager.insert_diary(self.db_conn, student_id, request["diaryText"], request["diaryTitle"])
 
             response = {"success": True}
 
