@@ -4,9 +4,27 @@ import time
 def insert_person(db_conn, args):
     cursor = db_conn.cursor()
     query = '''
-    INSERT INTO
-        person(name, age, document, attribute_id, address_name, address_number, address_complement, email, contact)
-    VALUES('{name}', {age}, '{document}', {attribute_id}, '{address_name}', '{address_number}', '{address_complement}', '{email}', '{contact}');
+    INSERT INTO person(
+            name,
+            age,
+            document,
+            attribute_id,
+            address_name,
+            address_number,
+            address_complement,
+            email,
+            contact)
+    VALUES(
+        '{name}',
+         {age},
+        '{document}',
+         {attribute_id},
+         '{address_name}',
+         '{address_number}',
+         '{address_complement}',
+         '{email}',
+         '{contact}'
+         );
     '''.format(name=args["name"],
                age=args["age"],
                document=args["document"],
