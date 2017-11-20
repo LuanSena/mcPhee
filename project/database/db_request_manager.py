@@ -340,8 +340,46 @@ def insert_diary(db_conn, student, diary_text, diary_title="Diário postado"):
             VALUES({student_id}, '{diary_title}', '{diary_text}', '{date_time}');
 '''.format(student_id=student, diary_text=diary_text, date_time=time.strftime("%Y-%m-%d %H:%M:%S"),
            diary_title=diary_title)
-    print(query)
     cursor.execute(query)
 
     db_conn.commit()
     return True
+
+
+def insert_school(db_conn, request):
+    cursor = db_conn.cursor()
+    query = """
+        INSERT INTO school (
+                full_name,
+                fantasy_name,
+                street,
+                email,
+                contact,
+                document,
+                owner_name,
+                owner_attribute,
+                owner_contact)
+        VALUES(
+                '{full_name}',
+                '{fantasy_name}',
+                '{address}',
+                '{email}',
+                '{contact}',
+                '{document}',
+                '{owner_name}',
+                '{owner_attribute}',
+                '{owner_contact}');
+
+    """.format(full_name=request['fullName'],
+               fantasy_name=request['fantasyName'],
+               address=request['address'],
+               email=request['email'],
+               contact=request['contact'],
+               document=request['document'],
+               owner_name=request['ownerName'],
+               owner_attribute=request['ownerAttribute'],
+               owner_contact=request['ownerContact'])
+    cursor.execute(query)
+
+    db_conn.commit()
+    return '0'
