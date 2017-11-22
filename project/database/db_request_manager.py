@@ -432,3 +432,23 @@ def get_managers(db_conn):
         manager["schoolName"] = row[5]
         managers.append(manager)
     return managers
+
+
+def get_classes_by_school(db_conn, school_id):
+    cursor = db_conn.cursor()
+    cursor.execute('''
+                    SELECT
+                        class_id,
+                        school_id,
+                        name
+                    FROM class
+                    WHERE school_id = {school_id}
+                    ;'''.format(school_id=school_id))
+    classes = list()
+    for row in cursor:
+        class_entry = dict()
+        class_entry["classId"] = row[0]
+        class_entry["schoolId"] = row[1]
+        class_entry["className"] = row[2]
+        classes.append(class_entry)
+    return classes
