@@ -401,3 +401,34 @@ def insert_school(db_conn, request):
 
     db_conn.commit()
     return '0'
+
+
+def get_managers(db_conn):
+    cursor = db_conn.cursor()
+    cursor.execute('''
+                SELECT
+                    person.person_id,
+                    person.name,
+                    person.document,
+                    person.contact,
+                    school.school_id,
+                    school.fantasy_name
+                from
+                    person,
+                    school,
+                    person_school as ps
+                WHERE
+                    ps.person_id = person.person_id
+                    and ps.school_id = school.school_id
+                    and ps.attribute_id = 3;''')
+    managers = list()
+    for row in cursor:
+        manager = dict()
+        manager["managerId"] = row[0]
+        manager["managerName"] = row[1]
+        manager["managerDocument"] = row[2]
+        manager["managerContact"] = row[3]
+        manager["schoolId"] = row[4]
+        manager["schoolName"] = row[5]
+        managers.append(manager)
+    return managers
