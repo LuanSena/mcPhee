@@ -434,6 +434,40 @@ def get_managers(db_conn):
     return managers
 
 
+def get_profs_by_school(db_conn, school_id):
+    cursor = db_conn.cursor()
+    cursor.execute('''
+                SELECT
+                    person.person_id,
+                    person.name,
+                    person.document,
+                    person.contact,
+                    person.email,
+                    school.school_id,
+                    school.fantasy_name
+                from
+                    person,
+                    school,
+                    person_school as ps
+                WHERE
+                    ps.person_id = person.person_id
+                    and ps.school_id = school.school_id
+                    and ps.attribute_id = 2
+                    and ps.school_id = {school_id};'''.format(school_id=school_id))
+    profs = list()
+    for row in cursor:
+        prof = dict()
+        prof["personId"] = row[0]
+        prof["personName"] = row[1]
+        prof["personDocument"] = row[2]
+        prof["personContact"] = row[3]
+        prof["personEmail"] = row[4]
+        prof["schoolId"] = row[5]
+        prof["schoolName"] = row[6]
+        profs.append(prof)
+    return profs
+
+
 def get_classes_by_school(db_conn, school_id):
     cursor = db_conn.cursor()
     cursor.execute('''
