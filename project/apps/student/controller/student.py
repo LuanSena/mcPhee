@@ -24,7 +24,16 @@ class Student(HTTPMethodView):
                          "message": "unexpected error has occurred"}, 500)
 
     async def get(self, request):
-        schools = db_request_manager.get_schools(self.db_conn)
+        schools = db_request_manager.get_students_by_schoool(self.db_conn, '%')
+        return json(schools, 200)
+
+
+class StudentSchool(HTTPMethodView):
+    def __init__(self, db_conn):
+        self.db_conn = db_conn
+
+    async def get(self, request, school_id):
+        schools = db_request_manager.get_students_by_schoool(self.db_conn, school_id)
         return json(schools, 200)
 
 

@@ -486,3 +486,44 @@ def get_classes_by_school(db_conn, school_id):
         class_entry["className"] = row[2]
         classes.append(class_entry)
     return classes
+
+
+def get_students_by_schoool(db_conn, param):
+    cursor = db_conn.cursor()
+    cursor.execute('''
+                SELECT
+                    student.student_id,
+                    student.name,
+                    student.grade,
+                    cast(strftime('%Y.%m%d', 'now') - strftime('%Y.%m%d', born_date) as INT) as age,
+                    student.nacionality,
+                    student.eating_obs,
+                    student.obs,
+                    student.created_at,
+                    class.class_id,
+                    class.name as class_name
+                FROM
+                    student,
+                    student_class,
+                    class,
+                    school
+                WHERE
+                    student_class.student_id = student.student_id AND
+                    school.school_id like '{}' AND
+                    class.school_id = school.school_id AND
+                    class.class_id = student_class.class_id;'''.format(param))
+    students = list()
+    for row in cursor:
+        student = dict()
+        student["studentId"] = row[0]
+        student["studentName"] = row[1]
+        student["studentGrade"] = row[2]
+        student["studentAge"] = row[3]
+        student["studentNacionality"] = row[4]
+        student["studentEatingObs"] = row[5]
+        student["studentObs"] = row[6]
+        student["studentCreatedAt"] = row[7]
+        student["classId"] = row[8]
+        student["className "] = row[9]
+        students.append(student)
+    return students
