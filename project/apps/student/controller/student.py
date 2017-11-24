@@ -37,6 +37,15 @@ class StudentSchool(HTTPMethodView):
         return json(schools, 200)
 
 
+class StudentProf(HTTPMethodView):
+    def __init__(self, db_conn):
+        self.db_conn = db_conn
+
+    async def get(self, request, person_id):
+        schools = db_request_manager.get_students_by_professional(self.db_conn, person_id)
+        return json(schools, 200)
+
+
 class StudentInstance(HTTPMethodView):
     def __init__(self, db_conn):
         self.db_conn = db_conn

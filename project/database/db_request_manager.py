@@ -527,3 +527,40 @@ def get_students_by_schoool(db_conn, param):
         student["className "] = row[9]
         students.append(student)
     return students
+
+
+def get_students_by_professional(db_conn, person_id):
+    cursor = db_conn.cursor()
+    cursor.execute('''
+                    SELECT
+                        s.student_id,
+                        s.name,
+                        s.grade,
+                        cast(strftime('%Y.%m%d', 'now') - strftime('%Y.%m%d', born_date) as INT) as age,
+                        s.nacionality,
+                        s.eating_obs,
+                        s.obs,
+                        s.created_at
+                    FROM
+                        person as p,
+                        person_class as pc,
+                        student as s,
+                        student_class as sc
+                    WHERE
+                        p.person_id = {} AND
+                        pc.person_id = p.person_id and
+                        sc.class_id =  pc.class_id AND
+                        s.student_id = sc.student_id;'''.format(person_id))
+    students = list()
+    for row in cursor:
+        student = dict()
+        student["studentId"] = row[0]
+        student["studentName"] = row[1]
+        student["studentGrade"] = row[2]
+        student["studentAge"] = row[3]
+        student["studentNacionality"] = row[4]
+        student["studentEatingObs"] = row[5]
+        student["studentObs"] = row[6]
+        student["studentCreatedAt"] = row[7]
+        students.append(student)
+    return students
