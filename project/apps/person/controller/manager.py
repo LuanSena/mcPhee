@@ -9,19 +9,19 @@ class Manager(HTTPMethodView):
     def __init__(self, db_conn):
         self.db_conn = db_conn
 
-    # async def post(self, request):
-    #     try:
-    #         request = request.json
-    #
-    #         person_id = db_request_manager.insert_person(self.db_conn, request)
-    #         response = {"success": True,
-    #                     "person": "v1/person/" + str(person_id)}
-    #
-    #         return json(response, 202)
-    #     except Exception as e:
-    #         print(str(e))
-    #         return json({"success": False,
-    #                      "message": "unexpected error has occurred"}, 500)
+    async def post(self, request):
+        try:
+            request = request.json
+            person_id = request['personId']
+            school_id = request['schoolId']
+            db_request_manager.insert_manager(self.db_conn, person_id, school_id)
+            response = {"success": True}
+
+            return json(response, 202)
+        except Exception as e:
+            print(str(e))
+            return json({"success": False,
+                         "message": "unexpected error has occurred"}, 500)
 
     async def get(self, request):
         managers = db_request_manager.get_managers(self.db_conn)

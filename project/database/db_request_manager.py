@@ -564,3 +564,22 @@ def get_students_by_professional(db_conn, person_id):
         student["studentCreatedAt"] = row[7]
         students.append(student)
     return students
+
+
+def insert_manager(db_conn, person_document, school_id):
+    cursor = db_conn.cursor()
+    query = '''
+        INSERT INTO person_school(
+                person_id,
+                school_id)
+        VALUES(
+                {person},
+                {school}
+             );
+        '''.format(person=person_document,
+                   school=school_id)
+    print(query)
+    cursor.execute(query)
+    db_conn.commit()
+    person = get_person_by_login(db_conn, args["email"], args["password"])
+    return person['id']
