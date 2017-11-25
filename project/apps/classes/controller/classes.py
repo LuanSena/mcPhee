@@ -14,10 +14,10 @@ class Classes(HTTPMethodView):
     async def post(self, request):
         try:
             request = request.json
-
-            school_id = db_request_manager.insert_school(self.db_conn, request)
-            response = {"success": True,
-                        "person": "v1/school/" + str(school_id)}
+            school_id = request['schoolId']
+            class_name = request['className']
+            school_id = db_request_manager.insert_class(self.db_conn, school_id, class_name)
+            response = {"success": True}
 
             return json(response, 202)
         except Exception as e:
