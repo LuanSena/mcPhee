@@ -583,3 +583,11 @@ def insert_manager(db_conn, person_document, school_id):
     db_conn.commit()
     person = get_person_by_login(db_conn, args["email"], args["password"])
     return person['id']
+
+
+def insert_class(db_conn, school_id, class_name):
+    return None
+
+
+def insert_prof(db_conn, school_id, person_id):
+    return None
