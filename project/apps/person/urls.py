@@ -17,6 +17,7 @@ class PersonBP:
 
         blueprint.add_route(Manager.as_view(db_conn), '/v1/person/managers')
         blueprint.add_route(Prof.as_view(db_conn), '/v1/person/prof/<school_id>')
+        blueprint.add_route(Prof.as_view(db_conn), '/v1/person/prof')
 
         blueprint.add_route(PersonLogin.as_view(db_conn), '/v1/auth')
 

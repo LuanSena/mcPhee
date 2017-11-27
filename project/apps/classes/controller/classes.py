@@ -16,7 +16,7 @@ class Classes(HTTPMethodView):
             request = request.json
             school_id = request['schoolId']
             class_name = request['className']
-            school_id = db_request_manager.insert_class(self.db_conn, school_id, class_name)
+            db_request_manager.insert_class(self.db_conn, school_id, class_name)
             response = {"success": True}
 
             return json(response, 202)

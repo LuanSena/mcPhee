@@ -586,8 +586,38 @@ def insert_manager(db_conn, person_document, school_id):
 
 
 def insert_class(db_conn, school_id, class_name):
-    return None
+    cursor = db_conn.cursor()
+    query = '''
+            INSERT INTO class(
+                    name,
+                    school_id)
+            VALUES(
+                    {name},
+                    {school}
+                 );
+            '''.format(name=class_name,
+                       school=school_id)
+    print(query)
+    cursor.execute(query)
+    db_conn.commit()
+    return True
 
 
 def insert_prof(db_conn, school_id, person_id):
-    return None
+    cursor = db_conn.cursor()
+    query = '''
+                INSERT INTO person_school(
+                        person_id,
+                        school_id,
+                        attribute_id)
+                VALUES(
+                        {person},
+                        {school},
+                        2
+                     );
+                '''.format(person=person_id,
+                           school=school_id)
+    print(query)
+    cursor.execute(query)
+    db_conn.commit()
+    return True
