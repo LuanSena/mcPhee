@@ -618,15 +618,15 @@ def insert_manager(db_conn, person_id, school_id):
 
 def insert_class(db_conn, school_id, class_name):
     cursor = db_conn.cursor()
-    query = '''
+    query = """
             INSERT INTO class(
                     name,
                     school_id)
             VALUES(
-                    {name},
+                    '{name}',
                     {school}
                  );
-            '''.format(name=class_name,
+            """.format(name=class_name,
                        school=school_id)
     print(query)
     cursor.execute(query)
