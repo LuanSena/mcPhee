@@ -13,7 +13,8 @@ def insert_person(db_conn, args):
             address_number,
             address_complement,
             email,
-            contact)
+            contact,
+            password)
     VALUES(
         '{name}',
          {age},
@@ -23,22 +24,25 @@ def insert_person(db_conn, args):
          '{address_number}',
          '{address_complement}',
          '{email}',
-         '{contact}'
+         '{contact}',
+         '{password}'
          );
     '''.format(name=args["name"],
                age=args["age"],
                document=args["document"],
-               attribute_id=args["attributeId"],
+               attribute_id=1,
                address_name=args["addressName"],
                address_number=args["addressNumber"],
                address_complement=args["addressComplement"],
                email=args["email"],
-               contact=args["contact"])
+               contact=args["contact"],
+               password=args["password"])
     print(query)
     cursor.execute(query)
     db_conn.commit()
     person = get_person_by_login(db_conn, args["email"], args["password"])
     return person['id']
+    # return 1
 
 
 def get_person_by_id(db_conn, person_id):

@@ -1,4 +1,4 @@
-from sanic.response import json
+from sanic.response import json, text
 from sanic.views import HTTPMethodView
 from sqlalchemy.orm.exc import NoResultFound
 
@@ -8,6 +8,9 @@ from project.database import db_request_manager
 class Person(HTTPMethodView):
     def __init__(self, db_conn):
         self.db_conn = db_conn
+
+    async def options(self, request):
+        return text("ok")
 
     async def post(self, request):
         try:
