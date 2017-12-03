@@ -1,4 +1,4 @@
-from sanic.response import json
+from sanic.response import json, text
 from sanic.views import HTTPMethodView
 from sqlalchemy.orm.exc import NoResultFound
 
@@ -9,10 +9,13 @@ class Manager(HTTPMethodView):
     def __init__(self, db_conn):
         self.db_conn = db_conn
 
+    async def options(self, request):
+        return text("ok")
+
     async def post(self, request):
         try:
             request = request.json
-            person_id = request['personId']
+            person_id = db_request_manager.get_person_by_document(self.db_conn, request['document'])
             school_id = request['schoolId']
             db_request_manager.insert_manager(self.db_conn, person_id, school_id)
             response = {"success": True}

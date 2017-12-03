@@ -45,6 +45,23 @@ def insert_person(db_conn, args):
     # return 1
 
 
+def get_person_by_document(db_conn, document) -> int:
+    cursor = db_conn.cursor()
+    query = """
+    select
+         per.person_id, per.name, per.age, per.document, per.attribute_id as acess_level, per.address_name,
+         per.address_number, per.address_complement, per.email, per.contact,
+         per.full_name
+    from 
+         person as per
+    where 
+         per.document = '{document}' """.format(document=document)
+    cursor.execute(query)
+
+    entry = cursor.fetchone()
+    return entry[0]
+
+
 def get_person_by_id(db_conn, person_id):
     cursor = db_conn.cursor()
     cursor.execute('''
@@ -570,23 +587,33 @@ def get_students_by_professional(db_conn, person_id):
     return students
 
 
-def insert_manager(db_conn, person_document, school_id):
+def insert_manager(db_conn, person_id, school_id):
     cursor = db_conn.cursor()
     query = '''
         INSERT INTO person_school(
                 person_id,
-                school_id)
+                school_id,
+                attribute_id)
         VALUES(
                 {person},
-                {school}
+                {school},
+                3
              );
-        '''.format(person=person_document,
+        '''.format(person=person_id,
                    school=school_id)
-    print(query)
+    # print(query)
     cursor.execute(query)
+
+    update_query = """
+                    UPDATE 
+                        person
+                    SET
+                        attribute_id = 3
+                    WHERE
+                        person_id = {person_id};""".format(person_id=person_id)
+    cursor.execute(update_query)
     db_conn.commit()
-    person = get_person_by_login(db_conn, args["email"], args["password"])
-    return person['id']
+    return True
 
 
 def insert_class(db_conn, school_id, class_name):
