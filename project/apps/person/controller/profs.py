@@ -16,7 +16,8 @@ class Prof(HTTPMethodView):
         try:
             request = request.json
             school_id = request['schoolId']
-            person_id = request['personId']
+            person_doc = request['personDocument']
+            person_id = db_request_manager.get_person_by_document(self.db_conn, person_doc)
             db_request_manager.insert_prof(self.db_conn, school_id, person_id)
             response = {"success": True}
 

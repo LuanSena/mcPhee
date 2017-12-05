@@ -478,7 +478,7 @@ def get_profs_by_school(db_conn, school_id):
     profs = list()
     for row in cursor:
         prof = dict()
-        prof["personId"] = row[0]
+        prof["person_id"] = row[0]
         prof["personName"] = row[1]
         prof["personDocument"] = row[2]
         prof["personContact"] = row[3]
@@ -648,7 +648,14 @@ def insert_prof(db_conn, school_id, person_id):
                      );
                 '''.format(person=person_id,
                            school=school_id)
-    print(query)
     cursor.execute(query)
+    update_query = """
+                    UPDATE 
+                        person
+                    SET
+                        attribute_id = 2
+                    WHERE
+                        person_id = {person_id};""".format(person_id=person_id)
+    cursor.execute(update_query)
     db_conn.commit()
     return True
