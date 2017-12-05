@@ -659,3 +659,15 @@ def insert_prof(db_conn, school_id, person_id):
     cursor.execute(update_query)
     db_conn.commit()
     return True
+
+
+def insert_student(db_conn, name, grade, born_date, nacionality, eating_obs, obs):
+    insert_query = """
+    INSERT INTO student
+        (name, grade, born_date, nacionality, eating_obs, obs, created_at)
+    VALUES('{name}', '{grade}', {Born_date}, '{nacionality}', '{eating_obs}', '{obs}', CURRENT_TIMESTAMP);
+    """.format(name=name, grade=grade, Born_date=born_date, nacionality=nacionality, eating_obs=eating_obs, obs=obs)
+    cursor = db_conn.cursor()
+    cursor.execute(insert_query)
+    db_conn.commit()
+    return True

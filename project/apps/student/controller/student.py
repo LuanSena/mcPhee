@@ -12,10 +12,21 @@ class Student(HTTPMethodView):
     async def post(self, request):
         try:
             request = request.json
+            name = request["studentName"]
+            grade = request["studentGrade"]
+            born_date = request["studentBorn_date"]
+            nacionality = request["studentNacionality"]
+            eating_obs = request["studentEating_obs"]
+            obs = request["studentObs"]
 
-            school_id = db_request_manager.insert_school(self.db_conn, request)
-            response = {"success": True,
-                        "person": "v1/school/" + str(school_id)}
+            db_request_manager.insert_student(self.db_conn,
+                                                          name,
+                                                          grade,
+                                                          born_date,
+                                                          nacionality,
+                                                          eating_obs,
+                                                          obs)
+            response = {"success": True}
 
             return json(response, 202)
         except Exception as e:
