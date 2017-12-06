@@ -550,6 +550,33 @@ def get_students_by_schoool(db_conn, param):
     return students
 
 
+def get_students_by_schoool_simplifed(db_conn, param):
+    cursor = db_conn.cursor()
+    cursor.execute('''
+                select student.student_id,
+                    student.name,
+                    student.grade,
+                    cast(strftime('%Y.%m%d', 'now') - strftime('%Y.%m%d', born_date) as INT) as age,
+                    student.nacionality,
+                    student.eating_obs,
+                    student.obs,
+                    student.created_at from student
+                where school_id = {};'''.format(param))
+    students = list()
+    for row in cursor:
+        student = dict()
+        student["studentId"] = row[0]
+        student["studentName"] = row[1]
+        student["studentGrade"] = row[2]
+        student["studentAge"] = row[3]
+        student["studentNacionality"] = row[4]
+        student["studentEatingObs"] = row[5]
+        student["studentObs"] = row[6]
+        student["studentCreatedAt"] = row[7]
+        students.append(student)
+    return students
+
+
 def get_students_by_professional(db_conn, person_id):
     cursor = db_conn.cursor()
     cursor.execute('''
@@ -661,12 +688,34 @@ def insert_prof(db_conn, school_id, person_id):
     return True
 
 
-def insert_student(db_conn, name, grade, born_date, nacionality, eating_obs, obs):
+def insert_student(db_conn, name, grade, born_date, nacionality, eating_obs, obs, school_id):
     insert_query = """
     INSERT INTO student
-        (name, grade, born_date, nacionality, eating_obs, obs, created_at)
-    VALUES('{name}', '{grade}', {Born_date}, '{nacionality}', '{eating_obs}', '{obs}', CURRENT_TIMESTAMP);
-    """.format(name=name, grade=grade, Born_date=born_date, nacionality=nacionality, eating_obs=eating_obs, obs=obs)
+        (name,
+         grade,
+         born_date,
+         nacionality,
+         eating_obs,
+         obs,
+         created_at,
+         school_id)
+    VALUES(
+        '{name}',
+        '{grade}',
+        {Born_date},
+        '{nacionality}',
+        '{eating_obs}',
+        '{obs}',
+        CURRENT_TIMESTAMP,
+        {school_id});
+    """.format(name=name,
+               grade=grade,
+               Born_date=born_date,
+               nacionality=nacionality,
+               eating_obs=eating_obs,
+               obs=obs,
+               school_id=school_id)
+    print(insert_query)
     cursor = db_conn.cursor()
     cursor.execute(insert_query)
     db_conn.commit()

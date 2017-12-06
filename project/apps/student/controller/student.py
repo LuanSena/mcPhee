@@ -1,4 +1,4 @@
-from sanic.response import json
+from sanic.response import json, text
 from sanic.views import HTTPMethodView
 from sqlalchemy.orm.exc import NoResultFound
 
@@ -9,6 +9,9 @@ class Student(HTTPMethodView):
     def __init__(self, db_conn):
         self.db_conn = db_conn
 
+    async def options(self, request):
+        return text("ok")
+
     async def post(self, request):
         try:
             request = request.json
@@ -18,14 +21,16 @@ class Student(HTTPMethodView):
             nacionality = request["studentNacionality"]
             eating_obs = request["studentEating_obs"]
             obs = request["studentObs"]
+            school_id = request["schoolId"]
 
             db_request_manager.insert_student(self.db_conn,
-                                                          name,
-                                                          grade,
-                                                          born_date,
-                                                          nacionality,
-                                                          eating_obs,
-                                                          obs)
+                                              name,
+                                              grade,
+                                              born_date,
+                                              nacionality,
+                                              eating_obs,
+                                              obs,
+                                              school_id)
             response = {"success": True}
 
             return json(response, 202)
@@ -35,8 +40,8 @@ class Student(HTTPMethodView):
                          "message": "unexpected error has occurred"}, 500)
 
     async def get(self, request):
-        schools = db_request_manager.get_students_by_schoool(self.db_conn, '%')
-        return json(schools, 200)
+        students = db_request_manager.get_students_by_schoool(self.db_conn, '%')
+        return json(students, 200)
 
 
 class StudentSchool(HTTPMethodView):
@@ -44,8 +49,8 @@ class StudentSchool(HTTPMethodView):
         self.db_conn = db_conn
 
     async def get(self, request, school_id):
-        schools = db_request_manager.get_students_by_schoool(self.db_conn, school_id)
-        return json(schools, 200)
+        students = db_request_manager.get_students_by_schoool_simplifed(self.db_conn, school_id)
+        return json(students, 200)
 
 
 class StudentProf(HTTPMethodView):
