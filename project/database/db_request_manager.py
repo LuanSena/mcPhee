@@ -628,7 +628,6 @@ def insert_manager(db_conn, person_id, school_id):
              );
         '''.format(person=person_id,
                    school=school_id)
-    # print(query)
     cursor.execute(query)
 
     update_query = """
