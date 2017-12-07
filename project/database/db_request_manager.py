@@ -725,7 +725,7 @@ def insert_class_student(db_conn, class_id, student_id):
     insert_query = """
         INSERT INTO student_class
             (student_id, class_id)
-        VALUES('{class_id}', '{student_id}');
+        VALUES('{student_id}', '{class_id}');
         """.format(class_id=class_id,
                    student_id=student_id)
     # print(insert_query)
@@ -753,7 +753,7 @@ def insert_student_owner(db_conn, owner, student_id):
     insert_query = """
             INSERT INTO student_owners
             (student_id, person_document)
-            VALUES('{owner}', '{student_id}');
+            VALUES('{student_id}', '{owner}');
 
             """.format(owner=owner,
                        student_id=student_id)
