@@ -1,4 +1,5 @@
 from sanic import Sanic
+from sanic.config import Config
 from sanic_cors import CORS
 # from sanic.config import Config
 from apps.classes.urls import ClassesBP
@@ -9,7 +10,7 @@ from apps.student.urls import StudentBP
 
 
 def get_app(session):
-    # Config.REQUEST_TIMEOUT = 3
+    Config.REQUEST_TIMEOUT = 9999999999
     app = Sanic()
 
     person = PersonBP(session)

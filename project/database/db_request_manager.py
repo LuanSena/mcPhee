@@ -121,7 +121,7 @@ def get_person_by_id(db_conn, person_id):
     from
         student, school, student_class, class, student_owners
     where
-        student_owners.person_document = {person_document} and
+        student_owners.person_document = '{person_document}' and
         student.student_id = student_owners.student_id and
         student_class.student_id = student_owners.student_id and
         class.class_id = student_class.class_id and
