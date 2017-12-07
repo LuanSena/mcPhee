@@ -719,3 +719,31 @@ def insert_student(db_conn, name, grade, born_date, nacionality, eating_obs, obs
     cursor.execute(insert_query)
     db_conn.commit()
     return True
+
+
+def insert_class_student(db_conn, class_id, student_id):
+    insert_query = """
+        INSERT INTO student_class
+            (student_id, class_id)
+        VALUES('{class_id}', '{student_id}');
+        """.format(class_id=class_id,
+                   student_id=student_id)
+    print(insert_query)
+    cursor = db_conn.cursor()
+    cursor.execute(insert_query)
+    db_conn.commit()
+    return True
+
+
+def insert_class_prof(db_conn, class_id, prof_id):
+    insert_query = """
+        INSERT INTO person_class
+            (class_id, person_id)
+        VALUES({class_id}, {prof_id});
+        """.format(class_id=class_id,
+                   prof_id=prof_id)
+    print(insert_query)
+    cursor = db_conn.cursor()
+    cursor.execute(insert_query)
+    db_conn.commit()
+    return True
