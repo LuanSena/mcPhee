@@ -747,3 +747,18 @@ def insert_class_prof(db_conn, class_id, prof_id):
     cursor.execute(insert_query)
     db_conn.commit()
     return True
+
+
+def insert_student_owner(db_conn, owner, student_id):
+    insert_query = """
+            INSERT INTO student_owners
+            (student_id, person_document)
+            VALUES('{owner}', '{student_id}');
+
+            """.format(owner=owner,
+                       student_id=student_id)
+    # print(insert_query)
+    cursor = db_conn.cursor()
+    cursor.execute(insert_query)
+    db_conn.commit()
+    return True

@@ -81,3 +81,28 @@ class StudentInstance(HTTPMethodView):
             print(str(e))
             return json({"success": False,
                          "message": "unexpected error has occurred"}, 500)
+
+
+class StudentOwner(HTTPMethodView):
+    def __init__(self, db_conn):
+        self.db_conn = db_conn
+
+    async def options(self, request, student_id):
+        return text("ok")
+
+    async def post(self, request, student_id):
+        try:
+            request = request.json
+            owner = request["ownerDocument"]
+            db_request_manager.insert_student_owner(self.db_conn, owner, student_id)
+            response = {"success": True}
+
+            return json(response, 202)
+        except Exception as e:
+            print(str(e))
+            return json({"success": False,
+                         "message": "unexpected error has occurred"}, 500)
+
+    async def get(self, request):
+        students = db_request_manager.get_students_by_schoool(self.db_conn, '%')
+        return json(students, 200)
