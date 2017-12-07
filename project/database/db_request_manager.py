@@ -728,7 +728,7 @@ def insert_class_student(db_conn, class_id, student_id):
         VALUES('{class_id}', '{student_id}');
         """.format(class_id=class_id,
                    student_id=student_id)
-    print(insert_query)
+    # print(insert_query)
     cursor = db_conn.cursor()
     cursor.execute(insert_query)
     db_conn.commit()
@@ -742,7 +742,7 @@ def insert_class_prof(db_conn, class_id, prof_id):
         VALUES({class_id}, {prof_id});
         """.format(class_id=class_id,
                    prof_id=prof_id)
-    print(insert_query)
+    # print(insert_query)
     cursor = db_conn.cursor()
     cursor.execute(insert_query)
     db_conn.commit()
