@@ -70,6 +70,7 @@ class StudentInstance(HTTPMethodView):
         try:
             student = db_request_manager.get_student_by_id(self.db_conn, student_id)
             student["schoolName"] = None
+            student["className"] = None
             if student["class_id"]:
                 student["className"], school_id = db_request_manager.get_class_name_by_id(self.db_conn, student["class_id"])
                 school = db_request_manager.get_school_by_id(self.db_conn, school_id)
