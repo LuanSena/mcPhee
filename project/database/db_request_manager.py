@@ -308,10 +308,11 @@ def get_student_by_id(db_conn, student_id):
             student.nacionality,
             student.eating_obs,
             student.obs,
-            student.created_at
+            student.created_at,
+            student_class.class_id
         from
-            student
-        where student_id={student_id}
+            student left outer join student_class on student_class.student_id = student.student_id
+        where student.student_id={student_id}
     """.format(student_id=student_id))
     for row in cursor:
         student["studentId"] = row[0]
@@ -322,6 +323,7 @@ def get_student_by_id(db_conn, student_id):
         student["eatingObs"] = row[5]
         student["obs"] = row[6]
         student["createdAt"] = row[7]
+        student["class_id"] = row[8]
     return student
 
 
@@ -508,6 +510,17 @@ def get_classes_by_school(db_conn, school_id):
         classes.append(class_entry)
     return classes
 
+def get_class_name_by_id(db_conn, class_id):
+    cursor = db_conn.cursor()
+    cursor.execute('''
+                    SELECT
+                        class_id,
+                        school_id,
+                        name
+                    FROM class
+                    WHERE class_id = {class_id};'''.format(class_id=class_id))
+    for row in cursor:
+        return row[2], row[1]
 
 def get_students_by_schoool(db_conn, param):
     cursor = db_conn.cursor()

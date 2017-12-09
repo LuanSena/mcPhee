@@ -69,6 +69,11 @@ class StudentInstance(HTTPMethodView):
     async def get(self, request, student_id):
         try:
             student = db_request_manager.get_student_by_id(self.db_conn, student_id)
+            student["schoolName"] = None
+            if student["class_id"]:
+                student["className"], school_id = db_request_manager.get_class_name_by_id(self.db_conn, student["class_id"])
+                school = db_request_manager.get_school_by_id(self.db_conn, school_id)
+                student["schoolName"] = school["fantasyName"]
             student["diarys"] = db_request_manager.get_student_diary_by_id(self.db_conn, student_id, 10)
             return json(student, 200)
 
