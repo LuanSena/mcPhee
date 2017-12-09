@@ -76,6 +76,7 @@ class StudentInstance(HTTPMethodView):
                 school = db_request_manager.get_school_by_id(self.db_conn, school_id)
                 student["schoolName"] = school["fantasyName"]
             student["diarys"] = db_request_manager.get_student_diary_by_id(self.db_conn, student_id, 10)
+            student["owners"] = db_request_manager.get_student_owners_by_student_id(self.db_conn, student_id)
             return json(student, 200)
 
         except NoResultFound as e:

@@ -775,3 +775,28 @@ def insert_student_owner(db_conn, owner, student_id):
     cursor.execute(insert_query)
     db_conn.commit()
     return True
+
+
+def get_student_owners_by_student_id(db_conn, student_id):
+    owners_query = """
+    SELECT
+      distinct(
+      student_owners.person_document) as document,
+      person.name,
+      person.contact,
+      person.email
+    FROM
+     student_owners left outer join person on person.document = student_owners.person_document
+    WHERE
+        student_owners.student_id = {}""".format(student_id)
+    cursor = db_conn.cursor()
+    cursor.execute(owners_query)
+    owners = list()
+    for row in cursor:
+        owner = dict()
+        owner["document"] = row[0]
+        owner["name"] = row[1]
+        owner["contact"] = row[2]
+        owner["email"] = row[3]
+        owners.append(owner)
+    return owners
