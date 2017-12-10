@@ -76,3 +76,38 @@ class ClassStudent(HTTPMethodView):
     async def get(self, request, school_id=None):
         classes = db_request_manager.get_classes_by_school(self.db_conn, school_id)
         return json(classes, 200)
+
+
+class ClassDetail(HTTPMethodView):
+    def __init__(self, db_conn):
+        self.db_conn = db_conn
+
+    async def options(self, request, class_id, prof_id):
+        return text("ok")
+
+    async def delete(self, request, class_id, prof_id):
+        try:
+            db_request_manager.delete_prof_from_class(self.db_conn, class_id, prof_id)
+            response = {"success": True}
+
+            return json(response, 200)
+        except Exception as e:
+            print(str(e))
+            return json({"success": False,
+                         "message": "unexpected error has occurred"}, 500)
+
+    async def get(self, request, class_id):
+        classDetail = dict()
+        students = db_request_manager.get_student_by_class_id(self.db_conn, class_id)
+
+        classDetail["students"] = list()
+        for student in students:
+            classDetail["students"].append(db_request_manager.get_student_by_id(self.db_conn, student["student_id"]))
+
+        classDetail["profs"] = list()
+        persons = db_request_manager.get_person_by_class_id(self.db_conn, class_id)
+        for person in persons:
+            classDetail["profs"].append(db_request_manager.get_person_by_id(self.db_conn,person))
+
+            # classes = db_request_manager.get_classes_by_school(self.db_conn, school_id)
+        return json(classDetail, 200)

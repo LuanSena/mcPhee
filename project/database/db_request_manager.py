@@ -800,3 +800,25 @@ def get_student_owners_by_student_id(db_conn, student_id):
         owner["email"] = row[3]
         owners.append(owner)
     return owners
+
+
+def get_person_by_class_id(db_conn, class_id) -> list:
+    query = """ select person_id from person_class where class_id = {} """.format(class_id)
+    cursor = db_conn.cursor()
+    cursor.execute(query)
+    persons = list()
+    for row in cursor:
+        persons.append(row[0])
+    return persons
+
+
+def delete_prof_from_class(db_conn, class_id, prof_id):
+    query = """ 
+        DELETE FROM person_class
+        WHERE class_id = '{class_id}' AND 
+            person_id = '{prof_id}'""".format(class_id=class_id, prof_id=prof_id)
+    cursor =  db_conn.cursor()
+
+    cursor.execute(query)
+    db_conn.commit()
+    return True
