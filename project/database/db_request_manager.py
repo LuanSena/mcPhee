@@ -822,3 +822,14 @@ def delete_prof_from_class(db_conn, class_id, prof_id):
     cursor.execute(query)
     db_conn.commit()
     return True
+
+def delete_student_from_class(db_conn, class_id, student_id):
+    query = """ 
+        DELETE FROM student_Class
+        WHERE class_id = '{class_id}' AND 
+            student_id = '{student_id}'""".format(class_id=class_id, student_id=student_id)
+    # print(query)
+    cursor =  db_conn.cursor()
+    cursor.execute(query)
+    db_conn.commit()
+    return True

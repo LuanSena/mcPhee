@@ -111,3 +111,21 @@ class ClassDetail(HTTPMethodView):
 
             # classes = db_request_manager.get_classes_by_school(self.db_conn, school_id)
         return json(classDetail, 200)
+
+class ClassDetailStudent(HTTPMethodView):
+    def __init__(self, db_conn):
+        self.db_conn = db_conn
+
+    async def options(self, request, class_id, student_id):
+        return text("ok")
+
+    async def delete(self, request, class_id, student_id):
+        try:
+            db_request_manager.delete_student_from_class(self.db_conn, class_id, student_id)
+            response = {"success": True}
+
+            return json(response, 200)
+        except Exception as e:
+            print(str(e))
+            return json({"success": False,
+                         "message": "unexpected error has occurred"}, 500)

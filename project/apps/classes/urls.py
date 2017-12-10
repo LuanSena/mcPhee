@@ -1,6 +1,6 @@
 from sanic import Blueprint
 
-from apps.classes.controller.classes import Classes, ClassProf, ClassStudent, ClassDetail
+from apps.classes.controller.classes import Classes, ClassProf, ClassStudent, ClassDetail, ClassDetailStudent
 
 
 class ClassesBP:
@@ -13,6 +13,7 @@ class ClassesBP:
         blueprint.add_route(ClassStudent.as_view(db_conn), '/v1/class/student')
         blueprint.add_route(ClassDetail.as_view(db_conn), '/v1/class/details/<class_id>')
         blueprint.add_route(ClassDetail.as_view(db_conn), '/v1/class/<class_id>/prof/<prof_id>')
+        blueprint.add_route(ClassDetailStudent.as_view(db_conn), '/v1/class/<class_id>/student/<student_id>')
 
         self.blueprint = blueprint
 
