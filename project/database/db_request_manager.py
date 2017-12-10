@@ -714,7 +714,7 @@ def insert_student(db_conn, name, grade, born_date, nacionality, eating_obs, obs
     VALUES(
         '{name}',
         '{grade}',
-        {Born_date},
+        '{Born_date}',
         '{nacionality}',
         '{eating_obs}',
         '{obs}',
@@ -727,7 +727,7 @@ def insert_student(db_conn, name, grade, born_date, nacionality, eating_obs, obs
                eating_obs=eating_obs,
                obs=obs,
                school_id=school_id)
-    print(insert_query)
+    # print(insert_query)
     cursor = db_conn.cursor()
     cursor.execute(insert_query)
     db_conn.commit()
