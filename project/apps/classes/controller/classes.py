@@ -1,7 +1,7 @@
 from sanic.response import json, text
 from sanic.views import HTTPMethodView
 
-from project.database import db_request_manager
+from database import db_request_manager
 
 
 class Classes(HTTPMethodView):

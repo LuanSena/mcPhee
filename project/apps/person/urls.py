@@ -4,7 +4,7 @@ from apps.person.controller.manager import Manager
 from apps.person.controller.person_classes import PersonClasses
 from apps.person.controller.person_login import PersonLogin
 from apps.person.controller.profs import Prof
-from project.apps.person.controller.person import Person, PersonInstance
+from apps.person.controller.person import Person, PersonInstance
 
 
 class PersonBP:

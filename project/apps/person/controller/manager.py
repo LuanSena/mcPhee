@@ -2,7 +2,7 @@ from sanic.response import json, text
 from sanic.views import HTTPMethodView
 from sqlalchemy.orm.exc import NoResultFound
 
-from project.database import db_request_manager
+from database import db_request_manager
 
 
 class Manager(HTTPMethodView):
